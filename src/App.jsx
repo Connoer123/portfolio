@@ -25,7 +25,7 @@ const DATA = {
     school: "University of Toronto",
     program: "Computer and Electrical Engineering",
     focus: "System Design Engineering, software",
-    bio: "I'm a Computer Engineering student with a creative edge and a strong technical foundation. I'm interested in the intersection of engineering, design, and human experience, and I enjoy turning ideas into practical, well-thought-out systems through hands-on projects. In my free time, I'm interested in psychology and spend a lot of time reading books and learning about how people think and behave."
+    bio: "I’m a Computer Engineering student with an interest in how software and hardware come together to create meaningful user experiences. I work across areas like PCB design, embedded systems, and FPGA based development, building end to end systems where signals, computation, and interaction are tightly integrated. I’m particularly drawn to systems with clear visual or physical feedback, where engineering decisions directly shape how something responds and feels to use. I approach problems from a systems perspective, thinking through timing, data flow, and user interaction together, and I’m interested in how principles from human perception and psychology can inform the design of more intuitive, responsive technology."
   },
   projects: [
     {
@@ -182,7 +182,6 @@ export default function Portfolio() {
   return (
     <div className="bg-white text-black min-h-screen font-sans selection:bg-black selection:text-white overflow-x-hidden">
       
-      {/* STICKY BLURRED NAVIGATION BAR */}
       <AnimatePresence>
         {isSceneLoaded && (
           <motion.nav
@@ -190,10 +189,9 @@ export default function Portfolio() {
             animate={{ opacity: 1, y: 0 }}
             className="fixed top-0 left-0 w-full px-12 py-6 flex justify-between items-center z-[100] backdrop-blur-md bg-white/60 border-b border-black/5"
           >
-            {/* LOGO "C" + NAME BLEND */}
             <button 
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-                className="cursor-pointer flex items-center gap-1 group"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+              className="cursor-pointer flex items-center gap-1 group"
             >
               <img src="/logo.PNG" alt="Logo" className="h-8 w-auto invert group-hover:scale-110 transition-transform" />
               <span className="text-xs font-bold tracking-[0.2em] uppercase transition-opacity">onnie Chen</span>
@@ -215,8 +213,11 @@ export default function Portfolio() {
       </AnimatePresence>
 
       <main>
-        {/* HERO SECTION */}
-        <motion.section style={{ opacity: heroOpacity, scale: heroScale }} id="hero" className="relative h-screen flex flex-col items-center justify-center text-center">
+        <motion.section
+          style={{ opacity: heroOpacity, scale: heroScale }}
+          id="hero"
+          className="relative h-screen flex flex-col items-center justify-center text-center"
+        >
           <div className="absolute inset-0 z-0">
             <HeroScene onLoaded={() => setIsSceneLoaded(true)} />
           </div>
@@ -240,17 +241,16 @@ export default function Portfolio() {
           </AnimatePresence>
         </motion.section>
 
-        {/* ABOUT */}
         <section id="about" className="max-w-7xl mx-auto px-12 py-40 min-h-screen flex flex-col justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div className="order-2 lg:order-1">
               <h2 className="text-[10px] font-black tracking-[0.5em] uppercase text-black/30 mb-8 underline decoration-black/10 underline-offset-8">
                 Introduction
               </h2>
-              <h3 className="text-6xl font-bold tracking-tighter mb-12 leading-[0.9]">
-                Engineering better <br />human experiences.
+              <h3 className="text-6xl font-bold tracking-tight mb-12 leading-[1.05]">
+                From Signals to Interaction
               </h3>
-              <p className="text-xl text-black/60 leading-relaxed font-light mb-12 max-w-xl italic">
+              <p className="text-base text-black/60 leading-relaxed font-light mb-12 max-w-xl">
                 "{DATA.about.bio}"
               </p>
 
@@ -282,7 +282,6 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* PROJECTS SECTION */}
         <section id="projects" className="py-40 bg-neutral-50 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-12 mb-20 flex justify-between items-center">
             <h2 className="text-5xl font-bold tracking-tighter uppercase">Projects</h2>
@@ -318,18 +317,22 @@ export default function Portfolio() {
                     </div>
 
                     <div className="space-y-6">
-                        <h3 className="text-3xl font-bold leading-[0.95] uppercase tracking-tighter text-black/90 group-hover:text-black transition-colors">
-                            {proj.title}
-                        </h3>
-                        <div className="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                             {proj.skills.map(s => (
-                                <span key={s} className="text-[8px] font-bold border border-black/10 px-2 py-1 rounded-full uppercase tracking-tighter">{s}</span>
-                             ))}
-                        </div>
+                      <h3 className="text-3xl font-bold leading-[0.95] uppercase tracking-tighter text-black/90 group-hover:text-black transition-colors">
+                        {proj.title}
+                      </h3>
+                      <div className="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        {proj.skills.map(s => (
+                          <span key={s} className="text-[8px] font-bold border border-black/10 px-2 py-1 rounded-full uppercase tracking-tighter">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="pt-4 border-t border-black/5">
-                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40 group-hover:text-black transition-colors">View Project Details →</span>
+                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40 group-hover:text-black transition-colors">
+                        View Project Details →
+                      </span>
                     </div>
                   </motion.div>
                 );
@@ -338,7 +341,6 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* CONTACT */}
         <section id="contact" className="max-w-7xl mx-auto px-12 py-48">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-32">
             <div>
@@ -372,7 +374,6 @@ export default function Portfolio() {
         </section>
       </main>
 
-      {/* MINIMALIST FOOTER - 2026 */}
       <footer className="w-full py-16 px-12 border-t border-black/5 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-black/40">
@@ -417,10 +418,14 @@ function ProjectModal({ project, onClose }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       className="fixed inset-0 z-[2000] bg-white overflow-y-auto p-12 md:p-24"
     >
-      <button onClick={onClose} className="fixed top-12 right-12 hover:rotate-90 transition-transform z-10"><X size={48} /></button>
+      <button onClick={onClose} className="fixed top-12 right-12 hover:rotate-90 transition-transform z-10">
+        <X size={48} />
+      </button>
 
       <div className="max-w-5xl mx-auto">
         <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-black/30 mb-4 block">{project.year}</span>
@@ -449,8 +454,12 @@ function ProjectModal({ project, onClose }) {
 
           {media.length > 1 && (
             <div className="absolute inset-0 flex items-center justify-between px-6 pointer-events-none">
-              <button onClick={prevMedia} className="p-4 bg-white/90 rounded-full shadow-lg hover:bg-black hover:text-white transition-colors pointer-events-auto"><ChevronLeft size={24} /></button>
-              <button onClick={nextMedia} className="p-4 bg-white/90 rounded-full shadow-lg hover:bg-black hover:text-white transition-colors pointer-events-auto"><ChevronRight size={24} /></button>
+              <button onClick={prevMedia} className="p-4 bg-white/90 rounded-full shadow-lg hover:bg-black hover:text-white transition-colors pointer-events-auto">
+                <ChevronLeft size={24} />
+              </button>
+              <button onClick={nextMedia} className="p-4 bg-white/90 rounded-full shadow-lg hover:bg-black hover:text-white transition-colors pointer-events-auto">
+                <ChevronRight size={24} />
+              </button>
             </div>
           )}
         </div>
@@ -465,19 +474,19 @@ function ProjectModal({ project, onClose }) {
             ))}
 
             {project.pdf && (
-                <div className="pt-6">
-                    <AppleGlass 
-                        asElement="a" 
-                        href={project.pdf} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all"
-                    >
-                        <FileText size={20} className="text-black/70" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-black">Check the Portfolio</span>
-                        <ExternalLink size={14} className="opacity-30 text-black" />
-                    </AppleGlass>
-                </div>
+              <div className="pt-6">
+                <AppleGlass
+                  asElement="a"
+                  href={project.pdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all"
+                >
+                  <FileText size={20} className="text-black/70" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-black">Check the Portfolio</span>
+                  <ExternalLink size={14} className="opacity-30 text-black" />
+                </AppleGlass>
+              </div>
             )}
           </div>
 
@@ -486,7 +495,9 @@ function ProjectModal({ project, onClose }) {
               <h4 className="text-[10px] font-black tracking-widest uppercase mb-8">Technologies</h4>
               <div className="flex flex-wrap gap-2">
                 {project.skills.map(s => (
-                  <span key={s} className="px-4 py-2 border border-black/10 rounded-full text-[9px] font-bold uppercase">{s}</span>
+                  <span key={s} className="px-4 py-2 border border-black/10 rounded-full text-[9px] font-bold uppercase">
+                    {s}
+                  </span>
                 ))}
               </div>
             </AppleGlass>
