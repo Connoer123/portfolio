@@ -273,7 +273,7 @@ export default function Portfolio() {
             <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
               <AppleGlass asElement="div" className="w-[380px] h-[500px] rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src="/about_me.jpeg"
+                  src="/about_me.jpg"
                   alt="About me"
                   className="w-full h-full object-cover"
                 />
