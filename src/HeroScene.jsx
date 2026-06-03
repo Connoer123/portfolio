@@ -4,19 +4,20 @@ import { motion } from 'framer-motion';
 
 export default function HeroScene() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const LoadingText = motion.div;
 
   return (
     <div className="relative w-full h-full">
-      {/* Loading Placeholder: Matches your site theme */}
+      {/* loading screen */}
       {!isLoaded && (
         <div className="absolute inset-0 bg-[#050305] flex items-center justify-center z-10">
-          <motion.div 
+          <LoadingText 
             animate={{ opacity: [0.4, 1, 0.4] }}
             transition={{ repeat: Infinity, duration: 2 }}
             className="text-[#D2A1BD] font-mono tracking-[0.5em] text-xs uppercase"
           >
             Initializing 3D Environment...
-          </motion.div>
+          </LoadingText>
         </div>
       )}
 

@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import HeroScene from './HeroScene';
 
-// --- DATA: CORE CONTENT ---
+// main content
 const DATA = {
   name: "CONNIE CHEN",
   role: "Engineer & Designer",
@@ -133,8 +133,11 @@ const DATA = {
   ]
 };
 
+// reusable glass button or card
 const AppleGlass = ({ children, className, onClick, isPrimary = false, asElement = "button", type = "button", ...rest }) => {
+  // this lets the component become a button div or link
   const Component = motion[asElement] || motion.button;
+
   return (
     <Component
       type={asElement === "button" ? type : undefined}
@@ -157,23 +160,34 @@ const AppleGlass = ({ children, className, onClick, isPrimary = false, asElement
 };
 
 export default function Portfolio() {
+  // keeps track of which project card is in the middle
   const [activeIdx, setActiveIdx] = useState(0);
+
+  // this stores the project that is open in the popup
   const [selectedWork, setSelectedWork] = useState(null);
+
+  // this shows the message after the contact form is submitted
   const [status, setStatus] = useState("");
+
+  // this waits for the 3d scene before showing the main content
   const [isSceneLoaded, setIsSceneLoaded] = useState(false);
 
+  // this makes the hero fade out a little when scrolling
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.98]);
 
+  // fallback timer in case the 3d scene takes long to load
   useEffect(() => {
     const timer = setTimeout(() => setIsSceneLoaded(true), 4500);
     return () => clearTimeout(timer);
   }, []);
 
+  // moves the project carousel
   const next = () => setActiveIdx((prev) => (prev + 1) % DATA.projects.length);
   const prev = () => setActiveIdx((prev) => (prev - 1 + DATA.projects.length) % DATA.projects.length);
 
+  // fake submit for now
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus("Success!");
@@ -184,6 +198,7 @@ export default function Portfolio() {
       
       <AnimatePresence>
         {isSceneLoaded && (
+          // nav only appears after the scene loads
           <motion.nav
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -198,6 +213,7 @@ export default function Portfolio() {
             </button>
 
             <div className="flex gap-4">
+              {/* makes the nav links from this list */}
               {['About', 'Projects', 'Contact'].map(item => (
                 <a
                   key={item}
@@ -219,6 +235,7 @@ export default function Portfolio() {
           className="relative h-screen flex flex-col items-center justify-center text-center"
         >
           <div className="absolute inset-0 z-0">
+            {/* 3d background */}
             <HeroScene onLoaded={() => setIsSceneLoaded(true)} />
           </div>
           
@@ -295,7 +312,9 @@ export default function Portfolio() {
             </div>
 
             <div className="relative w-full flex items-center justify-center">
+              {/* each project becomes one card in the carousel */}
               {DATA.projects.map((proj, idx) => {
+                // offset tells each card how far it is from the center card
                 const offset = idx - activeIdx;
                 return (
                   <motion.div
@@ -401,6 +420,7 @@ export default function Portfolio() {
 
       <AnimatePresence>
         {selectedWork && (
+          // opens when a project card is clicked
           <ProjectModal project={selectedWork} onClose={() => setSelectedWork(null)} />
         )}
       </AnimatePresence>
@@ -409,10 +429,14 @@ export default function Portfolio() {
 }
 
 function ProjectModal({ project, onClose }) {
+  // keeps track of which image or video is showing
   const [currentMedia, setCurrentMedia] = useState(0);
+
+  // not every project has the same amount of media
   const media = project.media || [];
   const item = media[currentMedia];
 
+  // moves between project images and videos
   const nextMedia = () => setCurrentMedia((prev) => (prev + 1) % media.length);
   const prevMedia = () => setCurrentMedia((prev) => (prev - 1 + media.length) % media.length);
 
