@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
+/* Page shell: the app uses full-height hero sections and white portfolio surfaces. */
 html, body, #root {
   height: 100%;
 }
 
+/* Base canvas: the dark background is only visible while the 3D hero initializes. */
 body {
   margin: 0;
   background: #020202;
