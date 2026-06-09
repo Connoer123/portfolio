@@ -12,7 +12,7 @@ export default function HeroScene({ onLoaded }) {
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full overflow-hidden bg-[#050305]">
       {/* loading screen */}
       {!isLoaded && (
         <div className="absolute inset-0 bg-[#050305] flex items-center justify-center z-10">
@@ -26,11 +26,13 @@ export default function HeroScene({ onLoaded }) {
         </div>
       )}
 
-      <Spline
-        scene="https://prod.spline.design/BGuTRcjdOSTxwZ5I/scene.splinecode"
-        onLoad={handleLoad}
-        className="w-full h-full"
-      />
+      <div className="hero-spline-stage">
+        <Spline
+          scene="https://prod.spline.design/BGuTRcjdOSTxwZ5I/scene.splinecode"
+          onLoad={handleLoad}
+          className="w-full h-full"
+        />
+      </div>
     </div>
   );
 }

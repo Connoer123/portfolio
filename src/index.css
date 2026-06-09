@@ -11,3 +11,30 @@ body {
   background: #020202;
   color: white;
 }
+
+/* 3D hero framing: give the Spline scene extra virtual width on phones so it is not cropped by the narrow viewport. */
+.hero-spline-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .hero-spline-stage {
+    top: 50%;
+    left: 50%;
+    width: 160vw;
+    height: 135svh;
+    transform: translate(-50%, -50%) scale(0.78);
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-spline-stage {
+    width: 190vw;
+    height: 170svh;
+    transform: translate(-50%, -50%) scale(0.66);
+  }
+}
