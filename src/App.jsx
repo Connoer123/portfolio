@@ -23,6 +23,9 @@ export default function Portfolio() {
   // this waits for the 3d scene before showing the main content
   const [isSceneLoaded, setIsSceneLoaded] = useState(false);
 
+  // this keeps the project carousel spacing comfortable on phones and desktops
+  const [isMobile, setIsMobile] = useState(false);
+
   // this makes the hero fade out a little when scrolling
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -33,6 +36,17 @@ export default function Portfolio() {
     const timer = setTimeout(() => setIsSceneLoaded(true), 4500);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateCarouselMode = () => setIsMobile(mediaQuery.matches);
+
+    updateCarouselMode();
+    mediaQuery.addEventListener("change", updateCarouselMode);
+    return () => mediaQuery.removeEventListener("change", updateCarouselMode);
+  }, []);
+
+  const carouselGap = isMobile ? 245 : 340;
 
   // moves the project carousel
   const next = () => setActiveIdx((prev) => (prev + 1) % portfolioData.projects.length);
@@ -52,7 +66,7 @@ export default function Portfolio() {
           <MotionNav
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="fixed top-0 left-0 w-full px-12 py-6 flex justify-between items-center z-[100] backdrop-blur-md bg-white/60 border-b border-black/5"
+            className="fixed top-0 left-0 w-full px-4 py-4 sm:px-8 lg:px-12 lg:py-6 flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center z-[100] backdrop-blur-md bg-white/75 border-b border-black/5"
           >
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -66,13 +80,13 @@ export default function Portfolio() {
               <span className="text-xs font-bold tracking-[0.2em] uppercase transition-opacity">onnie Chen</span>
             </button>
 
-            <div className="flex gap-4">
+            <div className="flex gap-1 sm:gap-4">
               {/* makes the nav links from this list */}
               {["About", "Projects", "Contact"].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  className="px-4 py-1 text-[10px] font-bold tracking-[0.2em] uppercase hover:opacity-50 transition-opacity"
+                  className="px-3 py-1 text-[9px] sm:px-4 sm:text-[10px] font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase hover:opacity-50 transition-opacity"
                 >
                   {item}
                 </a>
@@ -86,7 +100,7 @@ export default function Portfolio() {
         <MotionSection
           style={{ opacity: heroOpacity, scale: heroScale }}
           id="hero"
-          className="relative h-screen flex flex-col items-center justify-center text-center"
+          className="relative min-h-[100svh] flex flex-col items-center justify-center text-center"
         >
           <div className="absolute inset-0 z-0">
             {/* 3d background */}
@@ -99,33 +113,33 @@ export default function Portfolio() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="relative z-10 mt-[150px]"
+                className="relative z-10 mt-[120px] sm:mt-[150px]"
               >
                 <GlassPanel
-                  className="px-12 py-4 rounded-full"
+                  className="px-9 py-4 sm:px-12 rounded-full"
                   onClick={() => document.getElementById("about").scrollIntoView({ behavior: "smooth" })}
                 >
-                  <span className="text-[10px] font-bold tracking-[0.4em] uppercase">Explore</span>
+                  <span className="text-[10px] font-bold tracking-[0.32em] sm:tracking-[0.4em] uppercase">Explore</span>
                 </GlassPanel>
               </MotionDiv>
             )}
           </AnimatePresence>
         </MotionSection>
 
-        <section id="about" className="max-w-7xl mx-auto px-12 py-40 min-h-screen flex flex-col justify-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+        <section id="about" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 sm:py-32 lg:py-40 lg:min-h-screen flex flex-col justify-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center">
             <div className="order-2 lg:order-1">
-              <h2 className="text-[10px] font-black tracking-[0.5em] uppercase text-black/30 mb-8 underline decoration-black/10 underline-offset-8">
+              <h2 className="text-[10px] font-black tracking-[0.36em] sm:tracking-[0.5em] uppercase text-black/30 mb-6 sm:mb-8 underline decoration-black/10 underline-offset-8">
                 Introduction
               </h2>
-              <h3 className="text-6xl font-bold tracking-tight mb-12 leading-[1.05]">
+              <h3 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-8 sm:mb-12 leading-[1.05]">
                 From Signals to Interaction
               </h3>
-              <p className="text-base text-black/60 leading-relaxed font-light mb-12 max-w-xl">
+              <p className="text-sm sm:text-base text-black/60 leading-relaxed font-light mb-10 sm:mb-12 max-w-xl">
                 "{portfolioData.about.bio}"
               </p>
 
-              <div className="grid grid-cols-2 gap-8 border-t border-black/10 pt-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 border-t border-black/10 pt-10 sm:pt-12">
                 <div className="space-y-1">
                   <span className="text-[9px] font-bold uppercase tracking-widest text-black/40 flex items-center gap-2">
                     <MapPin size={10} /> Location
@@ -142,7 +156,7 @@ export default function Portfolio() {
             </div>
 
             <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-              <GlassPanel asElement="div" className="w-[380px] h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+              <GlassPanel asElement="div" className="w-full max-w-[320px] sm:max-w-[380px] h-[420px] sm:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
                 <img
                   src="/assets/profile/about-me.jpg"
                   alt="About me"
@@ -153,19 +167,19 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="projects" className="py-40 bg-neutral-50 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-12 mb-20 flex justify-between items-center">
-            <h2 className="text-5xl font-bold tracking-tighter uppercase">Projects</h2>
+        <section id="projects" className="py-24 sm:py-32 lg:py-40 bg-neutral-50 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-12 sm:mb-20 flex flex-col sm:flex-row gap-4 justify-between sm:items-center">
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tighter uppercase">Projects</h2>
             <p className="text-[10px] font-mono text-black/40 uppercase tracking-widest">Engineering Projects Gallery</p>
           </div>
 
-          <div className="relative h-[600px] flex items-center justify-center perspective-[2000px]">
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between w-full px-20 z-[100] pointer-events-none">
-              <button onClick={prev} className="p-6 bg-white/80 border border-black/5 rounded-full hover:bg-black hover:text-white transition-all pointer-events-auto">
-                <ChevronLeft size={24} />
+          <div className="relative h-[560px] sm:h-[600px] flex items-center justify-center perspective-[2000px]">
+            <div className="absolute inset-x-0 bottom-0 sm:top-1/2 sm:bottom-auto sm:-translate-y-1/2 flex justify-between w-full px-6 sm:px-12 lg:px-20 z-[100] pointer-events-none">
+              <button onClick={prev} className="p-4 sm:p-6 bg-white/85 border border-black/5 rounded-full hover:bg-black hover:text-white transition-all pointer-events-auto shadow-sm">
+                <ChevronLeft size={22} />
               </button>
-              <button onClick={next} className="p-6 bg-white/80 border border-black/5 rounded-full hover:bg-black hover:text-white transition-all pointer-events-auto">
-                <ChevronRight size={24} />
+              <button onClick={next} className="p-4 sm:p-6 bg-white/85 border border-black/5 rounded-full hover:bg-black hover:text-white transition-all pointer-events-auto shadow-sm">
+                <ChevronRight size={22} />
               </button>
             </div>
 
@@ -179,14 +193,14 @@ export default function Portfolio() {
                     key={project.id}
                     animate={{
                       rotateY: -15,
-                      x: offset * 340,
+                      x: offset * carouselGap,
                       z: -Math.abs(offset) * 150,
                       opacity: offset === 0 ? 1 : 0.3,
                       scale: offset === 0 ? 1 : 0.85
                     }}
                     transition={{ type: "spring", stiffness: 100, damping: 20 }}
                     onClick={() => offset === 0 && setSelectedWork(project)}
-                    className={`absolute group w-[320px] h-[450px] rounded-[30px] p-10 flex flex-col justify-between cursor-pointer backdrop-blur-[40px] bg-white/50 border border-white/60 shadow-xl ${offset === 0 ? "z-50" : "z-0"}`}
+                    className={`absolute group w-[min(82vw,320px)] h-[430px] sm:h-[450px] rounded-[24px] sm:rounded-[30px] p-7 sm:p-10 flex flex-col justify-between cursor-pointer backdrop-blur-[40px] bg-white/50 border border-white/60 shadow-xl ${offset === 0 ? "z-50" : "z-0"}`}
                   >
                     <div className="flex justify-between items-start">
                       <span className="text-[10px] font-mono tracking-widest opacity-40 uppercase">{project.year}</span>
@@ -194,10 +208,10 @@ export default function Portfolio() {
                     </div>
 
                     <div className="space-y-6">
-                      <h3 className="text-3xl font-bold leading-[0.95] uppercase tracking-tighter text-black/90 group-hover:text-black transition-colors">
+                      <h3 className="text-2xl sm:text-3xl font-bold leading-[0.98] sm:leading-[0.95] uppercase tracking-tighter text-black/90 group-hover:text-black transition-colors">
                         {project.title}
                       </h3>
-                      <div className="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="flex flex-wrap gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500">
                         {project.skills.map((skill) => (
                           <span key={skill} className="text-[8px] font-bold border border-black/10 px-2 py-1 rounded-full uppercase tracking-tighter">
                             {skill}
@@ -218,27 +232,27 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="contact" className="max-w-7xl mx-auto px-12 py-48">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-32">
+        <section id="contact" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 sm:py-32 lg:py-48">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-32">
             <div>
-              <h2 className="text-8xl font-bold tracking-tighter uppercase mb-6">Contact</h2>
-              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-black/40 mb-12">
+              <h2 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter uppercase mb-6">Contact</h2>
+              <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.22em] sm:tracking-[0.3em] text-black/40 mb-10 sm:mb-12">
                 Have any concerns or just want to chat? Say it here.
               </p>
               <div className="space-y-4">
-                <GlassPanel asElement="a" href={`mailto:${portfolioData.email}`} className="flex items-center gap-6 p-6 rounded-2xl group">
+                <GlassPanel asElement="a" href={`mailto:${portfolioData.email}`} className="flex items-center gap-4 sm:gap-6 p-5 sm:p-6 rounded-2xl group">
                   <Mail size={18} />
-                  <span className="font-mono text-xs uppercase tracking-widest text-black/60">{portfolioData.email}</span>
+                  <span className="font-mono text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest text-black/60 break-all">{portfolioData.email}</span>
                 </GlassPanel>
-                <GlassPanel asElement="a" href={portfolioData.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-6 p-6 rounded-2xl group">
+                <GlassPanel asElement="a" href={portfolioData.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-4 sm:gap-6 p-5 sm:p-6 rounded-2xl group">
                   <Linkedin size={18} />
-                  <span className="font-mono text-xs uppercase tracking-widest text-black/60">LinkedIn Profile</span>
+                  <span className="font-mono text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest text-black/60">LinkedIn Profile</span>
                 </GlassPanel>
               </div>
             </div>
 
-            <GlassPanel asElement="form" onSubmit={handleSubmit} className="space-y-8 p-12 rounded-[40px]">
-              <div className="grid grid-cols-2 gap-6">
+            <GlassPanel asElement="form" onSubmit={handleSubmit} className="space-y-7 sm:space-y-8 p-6 sm:p-10 lg:p-12 rounded-[28px] sm:rounded-[40px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <input type="text" placeholder="First Name" className="w-full bg-transparent border-b border-black/10 p-4 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-black" />
                 <input type="text" placeholder="Last Name" className="w-full bg-transparent border-b border-black/10 p-4 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-black" />
               </div>
@@ -251,7 +265,7 @@ export default function Portfolio() {
         </section>
       </main>
 
-      <footer className="w-full py-16 px-12 border-t border-black/5 bg-white">
+      <footer className="w-full py-12 sm:py-16 px-5 sm:px-8 lg:px-12 border-t border-black/5 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-black/40">
             © 2026 Connie Chen
