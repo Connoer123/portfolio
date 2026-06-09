@@ -12,7 +12,12 @@ body {
   color: white;
 }
 
-/* 3D hero framing: give the Spline scene extra virtual width on phones so it is not cropped by the narrow viewport. */
+/* 3D hero framing: the shell keeps a soft backdrop behind the scaled mobile Spline canvas. */
+.hero-spline-shell {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #ffffff 32%, #ffc0dc 60%, #b8d9ff 100%);
+}
+
 .hero-spline-stage {
   position: absolute;
   inset: 0;
@@ -24,17 +29,17 @@ body {
   .hero-spline-stage {
     top: 50%;
     left: 50%;
-    width: 160vw;
-    height: 135svh;
-    transform: translate(-50%, -50%) scale(0.78);
+    width: 200vw;
+    height: 180svh;
+    transform: translate(-50%, -50%) scale(0.5);
     transform-origin: center;
   }
 }
 
 @media (max-width: 430px) {
   .hero-spline-stage {
-    width: 190vw;
-    height: 170svh;
-    transform: translate(-50%, -50%) scale(0.66);
+    width: 230vw;
+    height: 210svh;
+    transform: translate(-50%, -50%) scale(0.43);
   }
 }

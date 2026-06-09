@@ -12,7 +12,7 @@ export default function HeroScene({ onLoaded }) {
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-[#050305]">
+    <div className="hero-spline-shell relative w-full h-full overflow-hidden bg-[#050305]">
       {/* loading screen */}
       {!isLoaded && (
         <div className="absolute inset-0 bg-[#050305] flex items-center justify-center z-10">
