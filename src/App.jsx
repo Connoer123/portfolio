@@ -66,7 +66,7 @@ export default function Portfolio() {
           <MotionNav
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="fixed top-0 left-0 w-full px-4 py-4 sm:px-8 lg:px-12 lg:py-6 flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center z-[100] backdrop-blur-md bg-white/75 border-b border-black/5"
+            className="fixed top-0 left-0 w-full px-4 py-4 sm:px-8 lg:px-12 lg:py-6 flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center z-[100] bg-white sm:bg-white/75 sm:backdrop-blur-md border-b border-black/5"
           >
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

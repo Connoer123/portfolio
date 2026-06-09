@@ -15,7 +15,7 @@ body {
 /* 3D hero framing: the shell keeps a soft backdrop behind the scaled mobile Spline canvas. */
 .hero-spline-shell {
   background:
-    linear-gradient(180deg, #ffffff 0%, #ffffff 32%, #ffc0dc 60%, #b8d9ff 100%);
+    linear-gradient(180deg, #ffffff 0%, #ffffff 34%, #ffc2de 62%, #f4ddff 100%);
 }
 
 .hero-spline-stage {
@@ -30,7 +30,7 @@ body {
     top: 50%;
     left: 50%;
     width: 200vw;
-    height: 180svh;
+    height: 220svh;
     transform: translate(-50%, -50%) scale(0.5);
     transform-origin: center;
   }
@@ -39,7 +39,7 @@ body {
 @media (max-width: 430px) {
   .hero-spline-stage {
     width: 230vw;
-    height: 210svh;
+    height: 245svh;
     transform: translate(-50%, -50%) scale(0.43);
   }
 }
